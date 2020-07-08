@@ -1,33 +1,32 @@
 package by.epam.inner.beans;
 
+import by.epam.inner.exceptions.PatternArgumentException;
+import by.epam.inner.util.Utils;
 import by.epam.inner.enums.Field;
 import by.epam.inner.exceptions.IllegalBynException;
 
 public class PriceDiscountPurchase extends Purchase {
 
-    private Byn priceDiscount;
+    private final Byn priceDiscount;
 
     public PriceDiscountPurchase(String[] tokens) {
         super(tokens);
-        setPriceDiscount(
-                String.valueOf((int) (Float.parseFloat(tokens[Field.DISCOUNT.ordinal() - 1]) * 100))
-        );
-    }
+        Byn priceDiscount;
+        try{
+            priceDiscount = new Byn(Utils.parseInt(tokens[Field.DISCOUNT.ordinal() - 1]));
+        } catch (PatternArgumentException e){
+            throw new IllegalBynException(Field.DISCOUNT,tokens[Field.DISCOUNT.ordinal() - 1]);
+        }
 
-    public PriceDiscountPurchase(Product product, int number, Byn priceDiscount) {
-        super(product,number);
-        this.priceDiscount = priceDiscount;
-    }
-
-    public void setPriceDiscount(Byn priceDiscount) throws IllegalBynException {
-        if(priceDiscount.compareTo(Byn.ZERO) < 0){
+        if(priceDiscount.compareTo(getProduct().getPrice()) > 0){
             throw new IllegalBynException(Field.DISCOUNT,priceDiscount);
         }
         this.priceDiscount = priceDiscount;
     }
 
-    public void setPriceDiscount(String priceDiscount) {
-        setPriceDiscount(new Byn(priceDiscount));
+    public PriceDiscountPurchase(Product product, int number, Byn priceDiscount) {
+        super(product,number);
+        this.priceDiscount = priceDiscount;
     }
 
     @Override

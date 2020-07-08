@@ -38,11 +38,11 @@ public class Runner {
             Map<DayOfWeek, List<Purchase>> enumeratedMap = new EnumMap<>(DayOfWeek.class);
             while (scr.hasNextLine()) {
                 String csvLine = scr.nextLine();
-                String[] tokens = csvLine.split(Constants.WORDS_SEPARATOR);
+                String[] tokens = csvLine.split(Constants.WORDS_SEPARATOR,2);
                 try {
                     try {
                         LocalDate date = LocalDate.parse(tokens[Field.DATE.ordinal()], Constants.DATE_TIME_FORMATTER);
-                        Purchase purchase = PurchaseFactory.getClassFromFactory(csvLine);
+                        Purchase purchase = PurchaseFactory.getClassFromFactory(tokens[1]);
                         lastPurchaseMap.put(purchase, date);
                         if (firstPurchaseMap.get(purchase) == null) {
                             firstPurchaseMap.put(purchase, date);
@@ -65,8 +65,6 @@ public class Runner {
                     LOGGER.error(e);
                 }
             }
-
-            System.out.println(lastPurchaseMap.get(breadToFind1));
 
             printMapPurchase(lastPurchaseMap, Constants.HEADER_LAST_PURCHASE_MAP);
             printMapPurchase(firstPurchaseMap, Constants.HEADER_FIRST_PURCHASE_MAP);

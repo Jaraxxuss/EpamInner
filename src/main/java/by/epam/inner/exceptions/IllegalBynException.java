@@ -6,9 +6,9 @@ import by.epam.inner.enums.Field;
 
 public class IllegalBynException extends IllegalFieldException {
 
-    private final Byn byn;
+    private final String byn;
 
-    public IllegalBynException(Field field, Byn byn) {
+    public IllegalBynException(Field field, String byn) {
         super(field);
         this.byn = byn;
     }

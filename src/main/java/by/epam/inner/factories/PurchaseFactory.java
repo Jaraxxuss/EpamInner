@@ -23,7 +23,7 @@ public class PurchaseFactory {
 
     public static Purchase getClassFromFactory(String csvLine) throws CsvLineException {
         PurchasesKind id = PurchasesKind.GENERAL_PURCHASE;
-        String[] tokens = csvLine.substring(csvLine.indexOf(Constants.WORDS_SEPARATOR) + 1).split(Constants.WORDS_SEPARATOR);
+        String[] tokens = csvLine.split(Constants.WORDS_SEPARATOR);
         if(tokens.length > 4){
             throw new CsvLineException(new IllegalStateException(Constants.MORE_THAN_FOUR_TOKENS_MES),csvLine);
         }

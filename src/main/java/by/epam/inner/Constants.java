@@ -22,4 +22,5 @@ public class Constants {
     public static final String MORE_THAN_FOUR_TOKENS_MES = "contains more than 4 tokens";
     public static final String LESS_THAN_THREE_TOKENS_MES = "contains less than 3 tokens";
     public static final String TOTAL_COST_HEADER = "total cost in List ";
+    public static final String WRONG_ARGUMENT_PATTERN = "wrong argument in pattern";
 }

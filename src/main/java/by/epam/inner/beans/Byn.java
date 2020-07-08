@@ -1,31 +1,34 @@
 package by.epam.inner.beans;
 
+import by.epam.inner.exceptions.NotPositiveArgumentException;
+
 import java.util.Objects;
 
 public class Byn implements Comparable<Byn> {
 
-    private static String convert(int pennies){
+    private static String convert(int pennies) {
         return pennies / 100 + "." + pennies % 100 / 10 + pennies % 10;
     }
-
-    public static final Byn ZERO = new Byn();
 
     private final int pennies;
 
     public Byn(int pennies) {
+        if (pennies < 0) {
+            throw new NotPositiveArgumentException(pennies);
+        }
         this.pennies = pennies;
     }
 
-    public Byn(){
+    public Byn() {
         this(0);
     }
 
-    public Byn(Byn byn){
+    public Byn(Byn byn) {
         this(byn.pennies);
     }
 
-    public Byn(int rub,int pennies){
-        this(getTotalPennies(rub,pennies));
+    public Byn(int rub, int pennies) {
+        this(getTotalPennies(rub, pennies));
     }
 
 

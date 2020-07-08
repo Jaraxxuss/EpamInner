@@ -1,23 +1,28 @@
 package by.epam.inner.beans;
 
+import by.epam.inner.util.Utils;
 import by.epam.inner.enums.Field;
-import by.epam.inner.exceptions.IllegalBynException;
 import by.epam.inner.exceptions.IllegalStringException;
 
 import java.util.Objects;
 
 public class Product {
-    private String name;
-    private Byn price;
+    private final String name;
+    private final Byn price;
 
     public Product(String name, Byn price) {
+        if(name == null || name.isEmpty()){
+            throw new IllegalStringException(Field.NAME,name);
+        }
         this.name = name;
         this.price = price;
     }
 
     public Product(String name, String price) {
-        setName(name);
-        setPrice(price);
+        this(
+                name,
+                new Byn(Utils.parseInt(price))
+        );
     }
 
     public String getName() {
@@ -26,24 +31,6 @@ public class Product {
 
     public Byn getPrice() {
         return price;
-    }
-
-    public void setName(String name) {
-        if(name.isEmpty()){
-            throw new IllegalStringException(Field.NAME,name);
-        }
-        this.name = name;
-    }
-
-    public void setPrice(String price) {
-        setPrice(new Byn(Integer.parseInt(price)));
-    }
-
-    public void setPrice(Byn price) {
-        if(price.compareTo(Byn.ZERO) < 0){
-            throw new IllegalBynException(Field.PRICE,price);
-        }
-        this.price = price;
     }
 
     @Override
